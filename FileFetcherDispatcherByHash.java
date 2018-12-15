@@ -1,3 +1,5 @@
+package inozytol.fileDispatcher;
+
 import java.nio.file.Path;
 
 public interface FileFetcherDispatcherByHash {
