@@ -2,7 +2,8 @@ package inozytol.fileDispatcher;
 
 import java.nio.file.Path;
 
-public interface FileFetcherDispatcherByHash {
-    Path getFile(String hash);
+public interface FileFetcherDispatcherById {
+    Path getFile(String id);
     String storeFile(Path fileToStore);
+    String [] fileList();
 }
