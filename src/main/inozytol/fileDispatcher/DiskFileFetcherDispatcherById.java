@@ -7,7 +7,7 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
     private Path storeFolder = null;
     
     public DiskFileFetcherDispatcherById(Path storeFolder) {
-	this.sourceFolder = sourceFolder;
+	this.storeFolder = storeFolder;
     }
     
     public Path getFile(String hash) {
@@ -20,9 +20,13 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
     /**
      * Stores file in directory given as storeFolder
      * @param fileToStore file that should be sent to store
-     * @return hash of stored file or null if storing failed for some reason
+     * @return id of stored file or null if storing failed for some reason
      */
     public String storeFile(Path fileToStore) {
+	return null;
+    }
+
+    public String [] fileList(){
 	return null;
     }
     
