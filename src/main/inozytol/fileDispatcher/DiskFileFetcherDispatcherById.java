@@ -1,6 +1,12 @@
 package inozytol.fileDispatcher;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+
+import java.io.IOException;
+
+import static java.nio.file.StandardCopyOption.*;
 
 public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById {
 
@@ -23,7 +29,15 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
      * @return id of stored file or null if storing failed for some reason
      */
     public String storeFile(Path fileToStore) {
-	return null;
+	if(fileToStore==null) System.err.println("lol file to store null");
+	Path target = storeFolder.resolve(fileToStore.getFileName());
+	try{
+	    Files.move(fileToStore, target, REPLACE_EXISTING);
+	} catch (IOException e){
+	    System.err.println(e);
+	    target = null;
+	}
+	return target==null?null:target.toString();
     }
 
     public String [] fileList(){

@@ -26,7 +26,7 @@ public class DiskFileFetcherDispatcherByIdTest {
     // Test that can return list of file id's in source directory
     @Test
     public void idListTest(){
-	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./storage"));
+	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./target/storage"));
 	String [] idArray = dffdbi.fileList();
 	List<String> idList = Arrays.asList(idArray);
 	assertTrue(idList.contains("foo"));
@@ -37,18 +37,20 @@ public class DiskFileFetcherDispatcherByIdTest {
     // Test that can get file 
     @Test
     public void getFileTest(){
-	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./storage"));
+	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./target/storage"));
 	Path filePath = dffdbi.getFile("foo");
 	assertTrue(Files.exists(filePath));
     }
     
-    // Test that can store file
+    // Test that class can store file
     @Test
     public void storeFileTest(){
-	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./storage"));
+	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./target/storage"));
 	
-	String id = dffdbi.storeFile(Paths.get("foo2"));
-	assertTrue(id.equals("foo2"));
+	String id = dffdbi.storeFile(Paths.get("./target/testFiles/foo2"));
+	System.out.println(id);
+	assertTrue(id.equals("./target/storage/foo2"));
+	assertTrue(Files.exists(Paths.get(id)));
     }
     
 

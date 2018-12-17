@@ -9,11 +9,13 @@ JUNIT_JAR_PATH=~/APPS/java/junit/junit-platform-console-standalone-1.3.2.jar
 rm -fr target # remove directory, forcefully (with contents, and without asking. DO NOT TRY THIS AT HOME (or more importantly at /)
 mkdir target
 mkdir target/storage
+mkdir target/testFiles
 
 ##mkdir target/inozytol
 #dir target/inozytol/fileDispatcher
 # This is some text file for test purposes
 echo "Hello and goodbye" > target/storage/foo
+echo "foo2 contents" > target/testFiles/foo2
 
 
 result=0 # contains sum of exit codes from various commands. Zero if everything successful
@@ -30,7 +32,7 @@ if [ "$result" -eq "0" ]
 then
     echo "Compilation completed"
     echo "Running tests"
-    java -jar "$JUNIT_JAR_PATH" --class-path target/inozytol/fileDispatcher:.:target --scan-class-path # it searches for tests in compiled classes from given directory
+    java -jar "$JUNIT_JAR_PATH" --class-path .:target --scan-class-path # it searches for tests in compiled classes from given directory
     
     #rm -rf doc
     #mkdir doc
