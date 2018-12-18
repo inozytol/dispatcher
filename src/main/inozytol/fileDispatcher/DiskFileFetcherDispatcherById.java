@@ -11,16 +11,33 @@ import static java.nio.file.StandardCopyOption.*;
 public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById {
 
     private Path storeFolder = null;
+    private Path tempFolder = null;
     
     public DiskFileFetcherDispatcherById(Path storeFolder) {
 	this.storeFolder = storeFolder;
+	this.tempFolder = Paths.get(".");
     }
-    
-    public Path getFile(String hash) {
-	// create path to file basing on source folder and hash name
-	// return that path. Or maybe return input stream?
-	// path should be more portable...
-	return null;
+
+    /**
+     * Should create a temporary file basing on given id and return path to it
+     * Return null if something wrong happens
+     * @param id of a file to copy to temporary file
+     * @return path to temporary file with contents assigned to that id, null if unsuccessful
+     */
+    public Path getFile(String id) {
+	//maybe move to guyava maybe?
+	Path ret = null;
+	// create temporary file being a copy of file from storage with given id
+	try {
+	    ret = Files.createTempFile(tempFolder,"","");
+
+	    Files.copy(storeFolder.resolve(id), ret);
+	} catch (IOException e){
+	    //this should be logged (TODO:LOGGING)
+	    System.err.println(e);
+	}
+	
+	return ret;
     }
 
     /**
