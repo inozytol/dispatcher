@@ -58,9 +58,9 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
     }
 
     public String [] fileList(){
-	// walk storage searching for files
-	// maybe someday add walking subdirectories
-	return null;
+	
+	// TODO maybe someday add walking subdirectories
+	return storeFolder.toFile().list();
     }
     
     public static void main(String [] argv) {

@@ -30,7 +30,8 @@ public class DiskFileFetcherDispatcherByIdTest {
 	String [] idArray = dffdbi.fileList();
 	List<String> idList = Arrays.asList(idArray);
 	assertTrue(idList.contains("foo"));
-	assertTrue(idList.size()==1);
+	assertTrue(idList.contains("foo2"));
+	assertTrue(idList.size()==2);
 	assertTrue(!idList.contains("non existing file"));
     }
 
