@@ -14,6 +14,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 
+import java.io.IOException;
+
 public class DiskFileFetcherDispatcherByIdTest {
 
     // Test that object can be created
@@ -52,6 +54,35 @@ public class DiskFileFetcherDispatcherByIdTest {
 	System.out.println(id);
 	assertTrue(id.equals("./target/storage/foo2"));
 	assertTrue(Files.exists(Paths.get(id)));
+    }
+
+    // Test that you can remove file
+    @Test
+    public void removeFileExistsTest() {
+	String storagePathString = "./target/storage";
+	String fileToRemovenNameString = "fileToRemove";
+	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get(storagePathString));
+	Path fileToRemove = Paths.get(storagePathString).resolve(fileToRemovenNameString);
+	try {
+	    //creating file to be removed
+	    Files.createFile(fileToRemove);
+	    assertTrue(Files.exists(fileToRemove));
+	    dffdbi.removeFile(fileToRemovenNameString);
+	} catch (IOException e) {
+	    System.err.println("Well, this embarrassing, remove file" +
+			       "if exists test thrown an error " + e);
+	}
+	assertTrue(!Files.exists(fileToRemove));
+
+    }
+
+
+    // Test that you can't remove file if it doesn't exist
+    @Test
+    public void removeFileDoesntExistTest() {
+	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./target/storage"));
+	assertTrue(!dffdbi.removeFile("this File does not exist"));
+
     }
     
 

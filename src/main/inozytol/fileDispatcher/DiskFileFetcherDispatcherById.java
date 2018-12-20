@@ -57,10 +57,20 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
 	return target==null?null:target.toString();
     }
 
+    /**
+     * Returns a list of files in its storage directory
+     * @return list of files in storage directory (list of id)
+     */
     public String [] fileList(){
 	
 	// TODO maybe someday add walking subdirectories
 	return storeFolder.toFile().list();
+    }
+
+    public boolean removeFile(String id){
+	return false;
+	//	public static boolean deleteIfExists(Path path)
+	//                    throws IOException
     }
     
     public static void main(String [] argv) {
