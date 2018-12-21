@@ -67,10 +67,22 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
 	return storeFolder.toFile().list();
     }
 
+    /**
+     * Removes file with given id from store
+     * Should log if exception happens
+     * @param id of file to remove
+     * @return true if removal was successful, false otherwise
+     */
     public boolean removeFile(String id){
-	return false;
-	//	public static boolean deleteIfExists(Path path)
-	//                    throws IOException
+	Path fileToRemove = storeFolder.resolve(id);
+	boolean ret = false;
+	try {
+	    ret = Files.deleteIfExists(fileToRemove);
+	} catch (IOException e) {
+	    // TODO:LOG
+	    System.err.println("Trying to remove file from file store exception " + e);
+	}
+	return ret;
     }
     
     public static void main(String [] argv) {
