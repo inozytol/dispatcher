@@ -33,11 +33,19 @@ then
     echo "Compilation completed"
     echo "Running tests"
     java -jar "$JUNIT_JAR_PATH" --class-path .:target --scan-class-path # it searches for tests in compiled classes from given directory
-    
-    #rm -rf doc
-    #mkdir doc
-    #cd doc
-    #javadoc ../Cryptest.java
+
+    if [ $? -eq "0" ]
+    then
+	
+	rm -rf doc
+	mkdir doc
+	cd doc
+	javadoc ../src/main/inozytol/fileDispatcher/*
+	cd ../
+	cd target
+	jar cvf fileFetcher.jar inozytol/fileDispatcher/*
+	cd ../
+    fi
     
 else
     echo "Compilation failed"
