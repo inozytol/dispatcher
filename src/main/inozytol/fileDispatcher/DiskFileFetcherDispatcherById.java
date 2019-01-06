@@ -54,7 +54,7 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
 	    System.err.println(e);
 	    target = null;
 	}
-	return target==null?null:target.toString();
+	return target==null?null:target.getFileName().toString();
     }
 
     /**

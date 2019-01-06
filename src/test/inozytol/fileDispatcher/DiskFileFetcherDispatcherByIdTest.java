@@ -48,12 +48,13 @@ public class DiskFileFetcherDispatcherByIdTest {
     // Test that class can store file
     @Test
     public void storeFileTest(){
-	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./target/storage"));
+	String storeFolder = "./target/storage";
+	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get(storeFolder));
 	
 	String id = dffdbi.storeFile(Paths.get("./target/testFiles/foo2"));
 	System.out.println(id);
-	assertTrue(id.equals("./target/storage/foo2"));
-	assertTrue(Files.exists(Paths.get(id)));
+	assertTrue(id.equals("foo2"));
+	assertTrue(Files.exists(Paths.get(storeFolder, id)));
     }
 
     // Test that you can remove file
