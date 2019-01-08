@@ -49,7 +49,7 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
 	if(fileToStore==null) System.err.println("lol file to store null");
 	Path target = storeFolder.resolve(fileToStore.getFileName());
 	try{
-	    Files.move(fileToStore, target, REPLACE_EXISTING);
+	    Files.copy(fileToStore, target, REPLACE_EXISTING);
 	} catch (IOException e){
 	    System.err.println(e);
 	    target = null;

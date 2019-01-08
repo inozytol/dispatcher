@@ -54,6 +54,7 @@ public class DiskFileFetcherDispatcherByIdTest {
 	String id = dffdbi.storeFile(Paths.get("./target/testFiles/foo2"));
 	System.out.println(id);
 	assertTrue(id.equals("foo2"));
+	assertTrue(Files.exists(Paths.get("./target/testFiles/foo2")));
 	assertTrue(Files.exists(Paths.get(storeFolder, id)));
     }
 
