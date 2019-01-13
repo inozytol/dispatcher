@@ -25,12 +25,9 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
      * @return path to temporary file with contents assigned to that id, null if unsuccessful
      */
     public Path getFile(String id) {
-	//maybe move to guyava maybe?
 	Path ret = null;
-	// create temporary file being a copy of file from storage with given id
 	try {
-	    ret = Files.createTempFile(tempFolder,"","");
-
+	    ret = tempFolder.resolve(id);
 	    Files.copy(storeFolder.resolve(id), ret);
 	} catch (IOException e){
 	    //this should be logged (TODO:LOGGING)
