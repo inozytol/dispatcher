@@ -38,6 +38,24 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
     }
 
     /**
+     * Should copy contents of a file with given id to given path
+     * Return null if something wrong happens
+     * @param id of a file to copy to temporary file
+     * @param targetFile file to write contents of a file with given id
+     * @return path to temporary file with contents assigned to that id, null if unsuccessful
+     */
+    public Path getFile(String id, Path targetFile) {
+	try {
+	    Files.copy(storeFolder.resolve(id), targetFile, REPLACE_EXISTING);
+	} catch (IOException e){
+	    //this should be logged (TODO:LOGGING)
+	    System.err.println(e);
+	    return null;
+	}
+	return targetFile;
+    }
+
+    /**
      * Stores file in directory given as storeFolder
      * @param fileToStore file that should be sent to store
      * @return id of stored file or null if storing failed for some reason

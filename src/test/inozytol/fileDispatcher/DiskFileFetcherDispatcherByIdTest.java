@@ -14,7 +14,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 
+
 import java.io.IOException;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 
 public class DiskFileFetcherDispatcherByIdTest {
 
@@ -86,7 +95,56 @@ public class DiskFileFetcherDispatcherByIdTest {
 	assertTrue(!dffdbi.removeFile("this File does not exist"));
 
     }
+
+    // Test that you can retrieve file into given temp file
+    @Test
+    public void retrieveFileIntoTemp() {
+	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get("./target/storage"));
+
+	Path tempFile = null;
+	try {
+	    tempFile = Files.createTempFile("","");
+	} catch (IOException e) {
+	    System.err.println("error creating temp file " + e);
+	    System.exit(0);
+	}
+	
+	Path filePath = dffdbi.getFile("foo", tempFile);
+	assertTrue(Files.exists(filePath));
+	assertTrue(binaryFilesAreEqual(Paths.get("./target/storage/foo"), tempFile));
+
+	try {
+	    Files.delete(tempFile);
+	} catch (IOException e) {
+	    System.err.println("error deleting temp file " + e);
+	}
+    }
+
     
+    /** 
+     * returns true if files are the same
+     * returns false if any of the files does not exist
+     */
+    boolean binaryFilesAreEqual(Path file1, Path file2) {
+        if(!Files.exists(file1) || !Files.exists(file2)) return false;
+
+	boolean ret = false;
+	int temp1;
+	int temp2;
+        
+        try (InputStream bis1 = new BufferedInputStream(new FileInputStream(file1.toFile())); InputStream bis2 = new BufferedInputStream(new FileInputStream(file2.toFile()))) {
+	    ret = true;
+            do {
+		temp1 = bis1.read();
+		temp2 = bis2.read();
+	    } while (temp1 == temp2 && temp1 != -1 && temp2 != -1);
+	    if (temp1 != temp2) ret = false;
+        } catch (IOException e) {
+            System.out.println("Exception has occured while comparing files");
+	    System.out.println(e+"");
+        }
+	return ret;
+    }
 
 }
 
