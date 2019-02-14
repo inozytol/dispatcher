@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import static java.nio.file.StandardCopyOption.*;
 
+import java.util.stream.Collectors;
+
 public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById {
 
     private Path storeFolder = null;
@@ -76,10 +78,18 @@ public class DiskFileFetcherDispatcherById implements FileFetcherDispatcherById 
      * Returns a list of files in its storage directory
      * @return list of files in storage directory (list of id)
      */
-    public String [] fileList(){
-	
+    public String [] fileList() {	
 	// TODO maybe someday add walking subdirectories
-	return storeFolder.toFile().list();
+	try {
+	    return Files.list(storeFolder)
+	    .map(Path::getFileName)
+	    .map(Path::toString)
+	    .collect(Collectors.toList())
+	    .toArray(new String[]{});
+	} catch (IOException e) {
+	    System.err.println("Exception during listing files " + e);
+	}
+	return new String[]{};
     }
 
     /**

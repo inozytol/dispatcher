@@ -46,6 +46,16 @@ public class DiskFileFetcherDispatcherByIdTest {
 	assertTrue(!idList.contains("non existing file"));
     }
 
+    // Test that can return list files from empty path to directory
+    @Test
+    public void idListTestForEmptyPath(){
+	DiskFileFetcherDispatcherById dffdbi = new DiskFileFetcherDispatcherById(Paths.get(""));
+	String [] idArray = dffdbi.fileList();
+	assertTrue(idArray != null);
+    }
+
+
+    
     // Test that can get file 
     @Test
     public void getFileTest(){
